@@ -1,19 +1,46 @@
 package com.adelannucci.bookstore.source;
 
-import android.os.AsyncTask;
+import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
 import com.adelannucci.bookstore.model.Book;
+import com.adelannucci.bookstore.source.remote.BookDataSource;
+import com.adelannucci.bookstore.source.remote.data.BookResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookRepository {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+public class BookRepository {
+    private static final String TAG = BookRepository.class.getCanonicalName();
     private MutableLiveData<List<Book>> books = new MutableLiveData<List<Book>>();
+    private BookDataSource api =  new RetrofitInitializer().BookService();
 
     public MutableLiveData<List<Book>> fetch() {
+        Call<BookResponse> call = api.getBook("android", 20L, 0L);
+        call.enqueue(new Callback<BookResponse>() {
+            @Override
+            public void onResponse(@Nullable Call<BookResponse> call,
+                                   @Nullable Response<BookResponse> response) {
+                if (response != null && response.isSuccessful()) {
+                    Log.i(TAG, response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(@Nullable Call<BookResponse> call,
+                                  @Nullable Throwable t) {
+                if (t != null) {
+                    Log.i(TAG, t.getMessage());
+                }
+            }
+        });
+
         List<Book> bookList = new ArrayList<Book>();
         bookList.add(new Book("Book test 1"));
         bookList.add(new Book("Book test 2"));
