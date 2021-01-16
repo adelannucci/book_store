@@ -10,16 +10,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.adelannucci.bookstore.databinding.BookItemBinding;
 import com.adelannucci.bookstore.model.Book;
+import com.adelannucci.bookstore.source.remote.data.Item;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.ViewHolder> {
 
     private static final String TAG = BookGridAdapter.class.getName();
-    private List<Book> books;
+    private List<Item> books = new ArrayList<>();
 
-    public void updateBooks(List<Book> books) {
+    public void updateBooks(List<Item> books) {
         this.books = books;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -43,17 +47,27 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private BookItemBinding bookItemBinding;
+
         ViewHolder(@NonNull BookItemBinding item) {
             super(item.getRoot());
             bookItemBinding = item;
         }
 
-        public void bindView(Book book) {
-            bookItemBinding.bookTitle.setText(book.getTitle());
+        public void bindView(Item book) {
+            String secureURL = book.getVolumeInfo().getImageLinks().getThumbnail()
+                    .replace("http", "https");
+
+            bookItemBinding.bookImage.setContentDescription(book.getVolumeInfo().getImageLinks().getThumbnail());
+            Picasso.get()
+                    .load(secureURL)
+                    .resize(128, 182)
+                    .centerCrop()
+                    .into(bookItemBinding.bookImage);
+
             bookItemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i(TAG, bookItemBinding.bookTitle.getText().toString());
+                    Log.i(TAG, book.getVolumeInfo().getImageLinks().getThumbnail());
                 }
             });
         }

@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.adelannucci.bookstore.databinding.ActivityMainBinding;
 import com.adelannucci.bookstore.model.Book;
+import com.adelannucci.bookstore.source.remote.data.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,23 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
         bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
         bookViewModel.getBooks().observe(this, books -> {
-            bookGridAdapter.updateBooks(books);
+            List<Item> list = new ArrayList<>();
+            if (books.getItems() != null || books.getItems().size() > 0) {
+                list.addAll(books.getItems());
+            }
+
+            bookGridAdapter.updateBooks(list);
         });
-    }
-
-    private void initBookList() {
-        List<Book> bookList = new ArrayList<Book>();
-        bookList.add(new Book("Book test 1"));
-        bookList.add(new Book("Book test 2"));
-        bookList.add(new Book("Book test 3"));
-        bookList.add(new Book("Book test 4"));
-        bookList.add(new Book("Book test 5"));
-        bookList.add(new Book("Book test 6"));
-        bookList.add(new Book("Book test 7"));
-        bookList.add(new Book("Book test 8"));
-        bookList.add(new Book("Book test 9"));
-        bookList.add(new Book("Book test 10"));
-        bookGridAdapter.updateBooks(bookList);
-
     }
 }

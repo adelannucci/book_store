@@ -18,10 +18,10 @@ import retrofit2.Response;
 
 public class BookRepository {
     private static final String TAG = BookRepository.class.getCanonicalName();
-    private MutableLiveData<List<Book>> books = new MutableLiveData<List<Book>>();
+    private MutableLiveData<BookResponse> books = new MutableLiveData<>();
     private BookDataSource api =  new RetrofitInitializer().BookService();
 
-    public MutableLiveData<List<Book>> fetch() {
+    public MutableLiveData<BookResponse> fetch() {
         Call<BookResponse> call = api.getBook("android", 20L, 0L);
         call.enqueue(new Callback<BookResponse>() {
             @Override
@@ -29,6 +29,7 @@ public class BookRepository {
                                    @Nullable Response<BookResponse> response) {
                 if (response != null && response.isSuccessful()) {
                     Log.i(TAG, response.body().toString());
+                    books.setValue(response.body());
                 }
             }
 
@@ -41,18 +42,18 @@ public class BookRepository {
             }
         });
 
-        List<Book> bookList = new ArrayList<Book>();
-        bookList.add(new Book("Book test 1"));
-        bookList.add(new Book("Book test 2"));
-        bookList.add(new Book("Book test 3"));
-        bookList.add(new Book("Book test 4"));
-        bookList.add(new Book("Book test 5"));
-        bookList.add(new Book("Book test 6"));
-        bookList.add(new Book("Book test 7"));
-        bookList.add(new Book("Book test 8"));
-        bookList.add(new Book("Book test 9"));
-        bookList.add(new Book("Book test 10"));
-        books.setValue(bookList);
+//        List<Book> bookList = new ArrayList<Book>();
+//        bookList.add(new Book("Book test 1"));
+//        bookList.add(new Book("Book test 2"));
+//        bookList.add(new Book("Book test 3"));
+//        bookList.add(new Book("Book test 4"));
+//        bookList.add(new Book("Book test 5"));
+//        bookList.add(new Book("Book test 6"));
+//        bookList.add(new Book("Book test 7"));
+//        bookList.add(new Book("Book test 8"));
+//        bookList.add(new Book("Book test 9"));
+//        bookList.add(new Book("Book test 10"));
+
         return books;
     }
 }
