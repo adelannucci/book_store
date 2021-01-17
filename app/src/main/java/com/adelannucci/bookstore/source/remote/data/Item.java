@@ -1,15 +1,20 @@
 package com.adelannucci.bookstore.source.remote.data;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Item {
 
-    private String kind;
-    private String id;
-    private String etag;
-    private String selfLink;
-    private VolumeInfo volumeInfo;
-    private SaleInfo saleInfo;
-    private AccessInfo accessInfo;
-    private SearchInfo searchInfo;
+    String kind;
+    String id;
+    String etag;
+    String selfLink;
+    VolumeInfo volumeInfo;
+    SaleInfo saleInfo;
+    AccessInfo accessInfo;
+    SearchInfo searchInfo;
+
+    public Item() {}
 
     public String getKind() {
         return kind;

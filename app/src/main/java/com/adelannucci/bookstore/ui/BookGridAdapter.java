@@ -1,5 +1,7 @@
 package com.adelannucci.bookstore.ui;
 
+import android.content.Intent;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adelannucci.bookstore.databinding.BookItemBinding;
-import com.adelannucci.bookstore.model.Book;
 import com.adelannucci.bookstore.source.remote.data.Item;
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +47,9 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.ViewHo
         return books.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private BookItemBinding bookItemBinding;
+        private final BookItemBinding bookItemBinding;
 
         ViewHolder(@NonNull BookItemBinding item) {
             super(item.getRoot());
@@ -68,6 +71,10 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     Log.i(TAG, book.getVolumeInfo().getImageLinks().getThumbnail());
+                    Parcelable parcelable = Parcels.wrap(book);
+                    Intent intent = new Intent(v.getContext(), BookDetail.class);
+                    intent.putExtra("BOOK_PARCELABLE", parcelable);
+                    v.getContext().startActivity(intent);
                 }
             });
         }

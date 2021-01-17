@@ -1,9 +1,15 @@
 package com.adelannucci.bookstore.source.remote.data;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class ImageLinks {
 
-    private String smallThumbnail;
-    private String thumbnail;
+    String smallThumbnail;
+    String thumbnail;
+
+    public ImageLinks() {
+    }
 
     public String getSmallThumbnail() {
         return smallThumbnail;

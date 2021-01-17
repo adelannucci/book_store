@@ -1,8 +1,14 @@
 package com.adelannucci.bookstore.source.remote.data;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class IndustryIdentifier {
-    private String type;
-    private String identifier;
+    String type;
+    String identifier;
+
+    public IndustryIdentifier() {
+    }
 
     public String getType() {
         return type;

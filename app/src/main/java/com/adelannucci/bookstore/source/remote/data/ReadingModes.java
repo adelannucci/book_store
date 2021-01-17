@@ -1,8 +1,14 @@
 package com.adelannucci.bookstore.source.remote.data;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class ReadingModes {
-    private boolean text;
-    private boolean image;
+    boolean text;
+    boolean image;
+
+    public ReadingModes() {
+    }
 
     public boolean isText() {
         return text;

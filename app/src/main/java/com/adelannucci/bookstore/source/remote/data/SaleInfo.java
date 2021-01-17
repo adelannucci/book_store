@@ -1,10 +1,25 @@
 package com.adelannucci.bookstore.source.remote.data;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class SaleInfo {
 
-    private String country;
-    private String saleability;
-    private boolean isEbook;
+    String buyLink;
+    String country;
+    String saleability;
+    boolean isEbook;
+
+    public SaleInfo() {
+    }
+
+    public String getBuyLink() {
+        return buyLink;
+    }
+
+    public void setBuyLink(String buyLink) {
+        this.buyLink = buyLink;
+    }
 
     public String getCountry() {
         return country;

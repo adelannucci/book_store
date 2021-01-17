@@ -1,16 +1,22 @@
 package com.adelannucci.bookstore.source.remote.data;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class AccessInfo {
-    private String country;
-    private String viewability;
-    private boolean embeddable;
-    private boolean publicDomain;
-    private String textToSpeechPermission;
-    private Epub epub;
-    private Pdf pdf;
-    private String webReaderLink;
-    private String accessViewStatus;
-    private boolean quoteSharingAllowed;
+    String country;
+    String viewability;
+    boolean embeddable;
+    boolean publicDomain;
+    String textToSpeechPermission;
+    Epub epub;
+    Pdf pdf;
+    String webReaderLink;
+    String accessViewStatus;
+    boolean quoteSharingAllowed;
+
+    public AccessInfo() {
+    }
 
     public String getCountry() {
         return country;

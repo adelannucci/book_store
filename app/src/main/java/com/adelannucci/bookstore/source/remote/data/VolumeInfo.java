@@ -1,29 +1,36 @@
 package com.adelannucci.bookstore.source.remote.data;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
+@Parcel
 public class VolumeInfo {
-    private String title;
-    private String subtitle;
-    private List<String> authors = null;
-    private String publisher;
-    private String publishedDate;
-    private String description;
-    private List<IndustryIdentifier> industryIdentifiers = null;
-    private ReadingModes readingModes;
-    private int pageCount;
-    private String printType;
-    private List<String> categories = null;
-    private double averageRating;
-    private int ratingsCount;
-    private String maturityRating;
-    private boolean allowAnonLogging;
-    private String contentVersion;
-    private ImageLinks imageLinks;
-    private String language;
-    private String previewLink;
-    private String infoLink;
-    private String canonicalVolumeLink;
+
+    String title;
+    String subtitle;
+    List<String> authors = null;
+    String publisher;
+    String publishedDate;
+    String description;
+    List<IndustryIdentifier> industryIdentifiers = null;
+    ReadingModes readingModes;
+    int pageCount;
+    String printType;
+    List<String> categories = null;
+    double averageRating;
+    int ratingsCount;
+    String maturityRating;
+    boolean allowAnonLogging;
+    String contentVersion;
+    ImageLinks imageLinks;
+    String language;
+    String previewLink;
+    String infoLink;
+    String canonicalVolumeLink;
+
+    public VolumeInfo() {
+    }
 
     public String getTitle() {
         return title;

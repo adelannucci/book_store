@@ -1,9 +1,15 @@
 package com.adelannucci.bookstore.source.remote.data;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Pdf {
 
-    private boolean isAvailable;
-    private String acsTokenLink;
+    boolean isAvailable;
+    String acsTokenLink;
+
+    public Pdf() {
+    }
 
     public boolean isAvailable() {
         return isAvailable;

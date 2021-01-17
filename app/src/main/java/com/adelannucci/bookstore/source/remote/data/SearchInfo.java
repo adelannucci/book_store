@@ -1,8 +1,14 @@
 package com.adelannucci.bookstore.source.remote.data;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class SearchInfo {
 
-    private String textSnippet;
+    String textSnippet;
+
+    public SearchInfo() {
+    }
 
     public String getTextSnippet() {
         return textSnippet;
