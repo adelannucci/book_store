@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.navigation.NavController;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
@@ -23,7 +22,6 @@ public class BookViewModel extends AndroidViewModel {
     private Executor executor;
     private String query = "android";
     private MutableLiveData<String> searchResults = new MutableLiveData<>();
-    private NavController navController;
 
     public BookViewModel(Application application) {
         super(application);
@@ -53,13 +51,5 @@ public class BookViewModel extends AndroidViewModel {
 
     public MutableLiveData<String> getSearchResults() {
         return searchResults;
-    }
-
-    public void setNavController(NavController navController) {
-        this.navController = navController;
-    }
-
-    public NavController getNavController() {
-        return navController;
     }
 }

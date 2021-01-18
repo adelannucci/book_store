@@ -79,8 +79,12 @@ public class BookDetails extends AppCompatActivity {
         binding.bookTitle.setText(bookmark.title);
         binding.bookAuthors.setText(bookmark.authors);
         binding.bookPublisher.setText(bookmark.publisher);
-        binding.averageRating.setText(bookmark.averageRating);
-        binding.ratingsCount.setText(bookmark.ratingsCount);
+        String starUnicode = new String(Character.toChars(0x2B50));
+        String averageRating = String.format("%s %s", bookmark.averageRating, starUnicode);
+        binding.averageRating.setText(averageRating);
+        String ratingLabel = super.getApplication().getString(R.string.label_rating);
+        String ratingsCount = String.format("%s %s",bookmark.ratingsCount, ratingLabel);
+        binding.ratingsCount.setText(ratingsCount);
         binding.bookPages.setText(bookmark.pages);
         binding.bookDescription.setText(bookmark.description);
 

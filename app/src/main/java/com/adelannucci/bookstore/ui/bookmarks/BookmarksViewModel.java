@@ -5,7 +5,6 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.navigation.NavController;
 
 import com.adelannucci.bookstore.source.local.BookRepository;
 import com.adelannucci.bookstore.source.local.data.Book;
@@ -16,7 +15,6 @@ public class BookmarksViewModel extends AndroidViewModel {
 
     private BookRepository repository;
     private final LiveData<List<Book>> books;
-    private NavController navController;
 
     public BookmarksViewModel(Application application) {
         super(application);
@@ -26,17 +24,5 @@ public class BookmarksViewModel extends AndroidViewModel {
 
     public LiveData<List<Book>> getBooks() {
         return books;
-    }
-
-    public void insert(Book book) {
-        repository.insert(book);
-    }
-
-    public void setNavController(NavController navController) {
-        this.navController = navController;
-    }
-
-    public NavController getNavController() {
-        return navController;
     }
 }

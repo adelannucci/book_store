@@ -4,7 +4,6 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 
-import com.adelannucci.bookstore.R;
 import com.adelannucci.bookstore.source.local.BookRepository;
 import com.adelannucci.bookstore.source.local.data.Book;
 import com.adelannucci.bookstore.source.remote.data.Item;
@@ -18,6 +17,11 @@ public class BookDetailsViewModel extends AndroidViewModel {
     public BookDetailsViewModel(Application application) {
         super(application);
         repository = new BookRepository(application);
+    }
+
+    public BookDetailsViewModel(Application application, BookRepository repository) {
+        super(application);
+        this.repository = repository;
     }
 
     public BookRepository getRepository() {
@@ -48,13 +52,8 @@ public class BookDetailsViewModel extends AndroidViewModel {
         bookmark.title = book.getVolumeInfo().getTitle();
         bookmark.publisher = book.getVolumeInfo().getPublisher();
 
-        String starUnicode = new String(Character.toChars(0x2B50));
-        String averageRating = String.format("%s %s", book.getVolumeInfo().getAverageRating(), starUnicode);
-        bookmark.averageRating = averageRating;
-
-        String ratingLabel = super.getApplication().getString(R.string.label_rating);
-        String ratingsCount = String.format("%s %s", book.getVolumeInfo().getRatingsCount(), ratingLabel);
-        bookmark.ratingsCount = ratingsCount;
+        bookmark.averageRating = book.getVolumeInfo().getAverageRating() + "";
+        bookmark.ratingsCount = book.getVolumeInfo().getRatingsCount() + "";
 
         String pages = "0";
 
