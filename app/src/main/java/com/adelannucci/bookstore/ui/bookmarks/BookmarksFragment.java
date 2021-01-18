@@ -22,10 +22,10 @@ public class BookmarksFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
 
-        bookmarksViewModel = new ViewModelProvider(getActivity()).get(BookmarksViewModel.class);
-
+        bookmarksViewModel = new ViewModelProvider(requireActivity()).get(BookmarksViewModel.class);
 
         binding = FragmentBookmarksBinding.inflate(inflater, container, false);
+
         View view = binding.getRoot();
         bookmarkGridAdapter = new BookmarkGridAdapter();
         StaggeredGridLayoutManager layoutManager;

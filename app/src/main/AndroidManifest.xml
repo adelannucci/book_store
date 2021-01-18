@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".ui.BookDetail"
+            android:name=".ui.details.BookDetails"
             android:label="@string/title_activity_book_detail" />
     </application>
 

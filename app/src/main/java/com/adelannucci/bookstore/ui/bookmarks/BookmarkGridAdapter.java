@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.adelannucci.bookstore.R;
 import com.adelannucci.bookstore.databinding.BookItemBinding;
 import com.adelannucci.bookstore.source.local.data.Book;
-import com.adelannucci.bookstore.ui.BookDetail;
+import com.adelannucci.bookstore.ui.details.BookDetails;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -78,7 +78,7 @@ public class BookmarkGridAdapter extends ListAdapter<Book, BookmarkGridAdapter.V
 
     public static void openBookDetails(@NonNull Book book, @NonNull Context context) {
         Parcelable parcelable = Parcels.wrap(book);
-        Intent intent = new Intent(context, BookDetail.class);
+        Intent intent = new Intent(context, BookDetails.class);
         intent.putExtra("BOOKMARKS_PARCELABLE", parcelable);
         context.startActivity(intent);
     }

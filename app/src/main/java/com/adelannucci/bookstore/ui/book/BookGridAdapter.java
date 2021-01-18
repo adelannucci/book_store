@@ -5,17 +5,17 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adelannucci.bookstore.R;
 import com.adelannucci.bookstore.databinding.BookItemBinding;
 import com.adelannucci.bookstore.source.remote.data.Item;
-import com.adelannucci.bookstore.ui.BookDetail;
+import com.adelannucci.bookstore.ui.details.BookDetails;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -23,6 +23,7 @@ import org.parceler.Parcels;
 public class BookGridAdapter extends PagedListAdapter<Item, BookGridAdapter.ViewHolder> {
 
     private static final String TAG = BookGridAdapter.class.getName();
+
     public BookGridAdapter() {
         super(Item.BOOK_COMPARATOR);
     }
@@ -41,7 +42,7 @@ public class BookGridAdapter extends PagedListAdapter<Item, BookGridAdapter.View
         holder.bindView(book);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final BookItemBinding bookItemBinding;
 
@@ -69,18 +70,13 @@ public class BookGridAdapter extends PagedListAdapter<Item, BookGridAdapter.View
                         .into(bookItemBinding.bookImage);
             }
 
-            bookItemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openBookDetails(book, v.getContext());
-                }
-            });
+            bookItemBinding.getRoot().setOnClickListener(v -> openBookDetails(book, v.getContext()));
         }
     }
 
     public static void openBookDetails(@NonNull Item book, @NonNull Context context) {
         Parcelable parcelable = Parcels.wrap(book);
-        Intent intent = new Intent(context, BookDetail.class);
+        Intent intent = new Intent(context, BookDetails.class);
         intent.putExtra("BOOK_PARCELABLE", parcelable);
         context.startActivity(intent);
     }

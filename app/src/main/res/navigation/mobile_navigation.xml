@@ -9,12 +9,25 @@
         android:id="@+id/nav_book_store"
         android:name="com.adelannucci.bookstore.ui.book.BookFragment"
         android:label="@string/menu_book_store"
-        tools:layout="@layout/fragment_book" />
+        tools:layout="@layout/fragment_book" >
+        <action
+            android:id="@+id/action_nav_book_store_to_book_details"
+            app:destination="@id/book_details" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_bookmarks"
         android:name="com.adelannucci.bookstore.ui.bookmarks.BookmarksFragment"
         android:label="@string/menu_bookmarks"
-        tools:layout="@layout/fragment_bookmarks" />
+        tools:layout="@layout/fragment_bookmarks" >
+        <action
+            android:id="@+id/action_nav_bookmarks_to_book_details"
+            app:destination="@id/book_details" />
+    </fragment>
+    <activity
+        android:id="@+id/book_details"
+        android:name="com.adelannucci.bookstore.ui.MainActivity"
+        android:label="activity_book_details"
+        tools:layout="@layout/activity_book_details" />
 
 </navigation>

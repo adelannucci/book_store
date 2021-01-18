@@ -11,5 +11,6 @@
     <string name="search_title">Buscar</string>
     <string name="search_hint">Busque pelo titulo do livro</string>
 
-
+    <string name="add_bookmarks">Livro adicionado aos favoritos</string>
+    <string name="remove_bookmarks">Livro removido dos favoritos</string>
 </resources>
