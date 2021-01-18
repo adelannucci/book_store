@@ -1,30 +1,30 @@
-package com.adelannucci.bookstore.ui.book;
+package com.adelannucci.bookstore.ui.bookmarks;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adelannucci.bookstore.R;
 import com.adelannucci.bookstore.databinding.BookItemBinding;
-import com.adelannucci.bookstore.source.remote.data.Item;
+import com.adelannucci.bookstore.source.local.data.Book;
 import com.adelannucci.bookstore.ui.BookDetail;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
-public class BookGridAdapter extends PagedListAdapter<Item, BookGridAdapter.ViewHolder> {
+public class BookmarkGridAdapter extends ListAdapter<Book, BookmarkGridAdapter.ViewHolder> {
 
-    private static final String TAG = BookGridAdapter.class.getName();
-    public BookGridAdapter() {
-        super(Item.BOOK_COMPARATOR);
+    private static final String TAG = BookmarkGridAdapter.class.getName();
+
+    public BookmarkGridAdapter() {
+        super(Book.BOOK_COMPARATOR);
     }
 
     @Override
@@ -37,9 +37,10 @@ public class BookGridAdapter extends PagedListAdapter<Item, BookGridAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Item book = getItem(position);
+        Book book = getItem(position);
         holder.bindView(book);
     }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -50,18 +51,15 @@ public class BookGridAdapter extends PagedListAdapter<Item, BookGridAdapter.View
             bookItemBinding = item;
         }
 
-        public void bindView(Item book) {
-            try {
-                String secureURL = book.getVolumeInfo().getImageLinks().getThumbnail()
-                        .replace("http", "https");
+        public void bindView(Book book) {
+            if (book.thumbnail != null) {
                 Picasso.get()
-                        .load(secureURL)
+                        .load(book.thumbnail)
                         .resize(128, 182)
                         .centerCrop()
                         .into(bookItemBinding.bookImage);
-                bookItemBinding.bookImage.setContentDescription(book.getVolumeInfo().getTitle());
-            } catch (Exception e) {
-                Log.i(TAG, "Don't have image links");
+                bookItemBinding.bookImage.setContentDescription(book.title);
+            } else {
                 Picasso.get()
                         .load(R.drawable.book)
                         .resize(128, 182)
@@ -78,10 +76,10 @@ public class BookGridAdapter extends PagedListAdapter<Item, BookGridAdapter.View
         }
     }
 
-    public static void openBookDetails(@NonNull Item book, @NonNull Context context) {
+    public static void openBookDetails(@NonNull Book book, @NonNull Context context) {
         Parcelable parcelable = Parcels.wrap(book);
         Intent intent = new Intent(context, BookDetail.class);
-        intent.putExtra("BOOK_PARCELABLE", parcelable);
+        intent.putExtra("BOOKMARKS_PARCELABLE", parcelable);
         context.startActivity(intent);
     }
 }

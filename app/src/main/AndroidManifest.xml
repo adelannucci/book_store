@@ -24,8 +24,7 @@
 
         <activity
             android:name=".ui.BookDetail"
-            android:label="@string/title_activity_book_detail"
-            android:parentActivityName=".ui.MainActivity" />
+            android:label="@string/title_activity_book_detail" />
     </application>
 
 </manifest>

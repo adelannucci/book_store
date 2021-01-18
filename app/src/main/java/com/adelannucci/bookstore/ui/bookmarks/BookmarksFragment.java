@@ -5,21 +5,43 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.adelannucci.bookstore.R;
+import com.adelannucci.bookstore.databinding.FragmentBookmarksBinding;
 
 public class BookmarksFragment extends Fragment {
 
     private BookmarksViewModel bookmarksViewModel;
+    private FragmentBookmarksBinding binding;
+    private BookmarkGridAdapter bookmarkGridAdapter;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        bookmarksViewModel =
-                new ViewModelProvider(this).get(BookmarksViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_bookmarks, container, false);
-        return root;
+    @Override
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        bookmarksViewModel = new ViewModelProvider(getActivity()).get(BookmarksViewModel.class);
+
+
+        binding = FragmentBookmarksBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+        bookmarkGridAdapter = new BookmarkGridAdapter();
+        StaggeredGridLayoutManager layoutManager;
+        layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        binding.recyclerViewBookmarks.setLayoutManager(layoutManager);
+        binding.recyclerViewBookmarks.setAdapter(bookmarkGridAdapter);
+
+        bookmarksViewModel.getBooks().observe(getViewLifecycleOwner(), books -> {
+            bookmarkGridAdapter.submitList(books);
+        });
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

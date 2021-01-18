@@ -102,7 +102,7 @@
             app:layout_constraintTop_toTopOf="@+id/average_rating" />
 
         <Button
-            android:id="@+id/add_bookmarks"
+            android:id="@+id/add_remove_bookmarks"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"

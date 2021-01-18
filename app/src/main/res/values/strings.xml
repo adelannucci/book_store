@@ -7,6 +7,7 @@
     <string name="label_rating">rating</string>
     <string name="label_buy_url">Link to buy</string>
     <string name="label_add_bookmarks">Add to bookmarks</string>
+    <string name="label_remove_bookmarks">Remove to bookmarks</string>
 
 
     <string name="search_title">Search</string>

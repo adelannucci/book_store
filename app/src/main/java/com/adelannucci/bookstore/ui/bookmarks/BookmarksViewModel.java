@@ -1,19 +1,33 @@
 package com.adelannucci.bookstore.ui.bookmarks;
 
+
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-public class BookmarksViewModel extends ViewModel {
+import com.adelannucci.bookstore.source.local.BookRepository;
+import com.adelannucci.bookstore.source.local.data.Book;
 
-    private MutableLiveData<String> mText;
+import java.util.List;
 
-    public BookmarksViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+public class BookmarksViewModel extends AndroidViewModel {
+
+    private BookRepository repository;
+    private final LiveData<List<Book>> books;
+
+    public BookmarksViewModel(Application application) {
+        super(application);
+        repository = new BookRepository(application);
+        books = repository.getAllBooks();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<Book>> getBooks() {
+        return books;
     }
+
+    public void insert(Book book) {
+        repository.insert(book);
+    }
+
 }
