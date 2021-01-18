@@ -6,10 +6,10 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface BookDataSource {
+public interface BookApiInterface {
 
     @GET("volumes")
     Call<BookResponse> getBook(@Query("q") String title,
-                               @Query("maxResults") Long pageSize,
+                               @Query("maxResults") Integer pageSize,
                                @Query("startIndex") Long page);
 }

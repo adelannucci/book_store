@@ -1,5 +1,6 @@
 package com.adelannucci.bookstore.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adelannucci.bookstore.databinding.BookItemBinding;
@@ -16,17 +18,12 @@ import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.ViewHolder> {
+public class BookGridAdapter extends PagedListAdapter<Item, BookGridAdapter.ViewHolder> {
 
     private static final String TAG = BookGridAdapter.class.getName();
-    private List<Item> books = new ArrayList<>();
 
-    public void updateBooks(List<Item> books) {
-        this.books = books;
-        notifyDataSetChanged();
+    public BookGridAdapter() {
+        super(Item.BOOK_COMPARATOR);
     }
 
     @Override
@@ -39,12 +36,8 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bindView(books.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return books.size();
+        Item book = getItem(position);
+        holder.bindView(book);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -70,13 +63,17 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.ViewHo
             bookItemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i(TAG, book.getVolumeInfo().getImageLinks().getThumbnail());
-                    Parcelable parcelable = Parcels.wrap(book);
-                    Intent intent = new Intent(v.getContext(), BookDetail.class);
-                    intent.putExtra("BOOK_PARCELABLE", parcelable);
-                    v.getContext().startActivity(intent);
+                    openBookDetails(book, v.getContext());
                 }
             });
         }
+    }
+
+    public static void openBookDetails(@NonNull Item book, @NonNull Context context) {
+        Log.i(TAG, book.getVolumeInfo().getImageLinks().getThumbnail());
+        Parcelable parcelable = Parcels.wrap(book);
+        Intent intent = new Intent(context, BookDetail.class);
+        intent.putExtra("BOOK_PARCELABLE", parcelable);
+        context.startActivity(intent);
     }
 }

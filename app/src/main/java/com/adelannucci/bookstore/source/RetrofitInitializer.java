@@ -1,6 +1,6 @@
 package com.adelannucci.bookstore.source;
 
-import com.adelannucci.bookstore.source.remote.BookDataSource;
+import com.adelannucci.bookstore.source.remote.BookApiInterface;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -14,7 +14,7 @@ public class RetrofitInitializer {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    public BookDataSource BookService() {
-        return retrofit.create(BookDataSource.class);
+    public BookApiInterface BookService() {
+        return retrofit.create(BookApiInterface.class);
     }
 }

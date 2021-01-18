@@ -1,5 +1,10 @@
 package com.adelannucci.bookstore.source.remote.data;
 
+import android.annotation.SuppressLint;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+
 import org.parceler.Parcel;
 
 @Parcel
@@ -79,4 +84,16 @@ public class Item {
     public void setSearchInfo(SearchInfo searchInfo) {
         this.searchInfo = searchInfo;
     }
+
+    public static final DiffUtil.ItemCallback<Item> BOOK_COMPARATOR = new DiffUtil.ItemCallback<Item>() {
+        @SuppressLint("DiffUtilEquals")
+        @Override public boolean areItemsTheSame(@NonNull Item oldItem, @NonNull Item newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+
+        @SuppressLint("DiffUtilEquals")
+        @Override public boolean areContentsTheSame(@NonNull Item oldItem, @NonNull Item newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+    };
 }

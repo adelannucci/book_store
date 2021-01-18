@@ -37,8 +37,11 @@ public class BookDetail extends AppCompatActivity {
                 .into(binding.bookImage);
 
         binding.bookTitle.setText(book.getVolumeInfo().getTitle());
-        binding.bookAuthors.setText(String.join(", ", book.getVolumeInfo().getAuthors()));
-        binding.bookPublisher.setText(book.getVolumeInfo().getPublisher());
+        if (book.getVolumeInfo().getAuthors() != null) {
+            binding.bookAuthors.setText(String.join(", ", book.getVolumeInfo().getAuthors()));
+//        binding.bookAuthors.setSelected(true);
+            binding.bookPublisher.setText(book.getVolumeInfo().getPublisher());
+        }
 
         String starUnicode = new String(Character.toChars(0x2B50));
         String averageRating = String.format("%s %s", book.getVolumeInfo().getAverageRating(), starUnicode);
@@ -71,7 +74,5 @@ public class BookDetail extends AppCompatActivity {
             binding.buyUrl.setClickable(false);
             binding.buyUrl.setEnabled(false);
         }
-
-
     }
 }

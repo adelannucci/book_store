@@ -5,4 +5,7 @@
     <string name="label_pages">Pages</string>
     <string name="label_description">About this book</string>
     <string name="label_rating">rating</string>
+    <string name="label_buy_url">Open link to buy</string>
+    <string name="search_title">Search</string>
+    <string name="search_hint">Search by book title</string>
 </resources>
