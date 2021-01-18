@@ -6,50 +6,52 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.paging.PagedList;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.adelannucci.bookstore.R;
 import com.adelannucci.bookstore.databinding.ActivityMainBinding;
-import com.adelannucci.bookstore.source.remote.data.Item;
+import com.adelannucci.bookstore.ui.book.BookViewModel;
 
 public class MainActivity extends AppCompatActivity {
-    private BookGridAdapter bookGridAdapter;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private BookViewModel bookViewModel = new BookViewModel(this.getApplication());
+
+    private AppBarConfiguration mAppBarConfiguration;
+    private ActivityMainBinding binding;
+    private BookViewModel bookViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
-
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        bookGridAdapter = new BookGridAdapter();
-        StaggeredGridLayoutManager layoutManager;
-        layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        binding.recyclerViewBooks.setLayoutManager(layoutManager);
-        binding.recyclerViewBooks.setAdapter(bookGridAdapter);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        swipeRefreshLayout = binding.swipeLayout;
-        swipeRefreshLayout.setOnRefreshListener(this::getBooks);
-        getBooks();
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_book_store, R.id.nav_bookmarks)
+                .setOpenableLayout(binding.drawerLayout)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(binding.navView, navController);
+
+        bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         MenuItem item = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) item.getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                bookViewModel.setQuery(query);
-                getBooks();
+                bookViewModel.getSearchResults().postValue(query);
                 return true;
             }
 
@@ -58,24 +60,14 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
+
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    public void getBooks() {
-        bookViewModel.bookPagedList.observe(this, this::showOnRecyclerView);
-    }
-
-    private void showOnRecyclerView(PagedList<Item> books) {
-        bookGridAdapter.submitList(books);
-        bookGridAdapter.notifyDataSetChanged();
-        if (swipeRefreshLayout.isRefreshing()) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
     }
 }

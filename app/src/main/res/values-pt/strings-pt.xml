@@ -5,7 +5,9 @@
     <string name="label_pages">Páginas</string>
     <string name="label_description">Sobre este livro</string>
     <string name="label_rating">avaliação</string>
-    <string name="label_buy_url">Abrir link para comprar</string>
+    <string name="label_buy_url">Link para comprar</string>
+    <string name="label_add_bookmarks">Adicionar aos favoritos</string>
     <string name="search_title">Buscar</string>
     <string name="search_hint">Busque pelo titulo do livro</string>
+
 </resources>

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,29 +16,41 @@ import org.parceler.Parcels;
 
 public class BookDetail extends AppCompatActivity {
 
+    private ActivityBookDetailBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        com.adelannucci.bookstore.databinding.ActivityBookDetailBinding binding = ActivityBookDetailBinding.inflate(getLayoutInflater());
+        binding = ActivityBookDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Parcelable parcelable = getIntent().getParcelableExtra("BOOK_PARCELABLE");
         Item book = Parcels.unwrap(parcelable);
+        bindingLayout(book);
+    }
 
-        String secureURL = book.getVolumeInfo().getImageLinks().getThumbnail()
-                .replace("http", "https");
-
-        binding.bookImage.setContentDescription(book.getVolumeInfo().getImageLinks().getThumbnail());
-        Picasso.get()
-                .load(secureURL)
-                .resize(128, 182)
-                .centerCrop()
-                .into(binding.bookImage);
+    private void bindingLayout(Item book) {
+        try {
+            String secureURL = book.getVolumeInfo().getImageLinks().getThumbnail()
+                    .replace("http", "https");
+            Picasso.get()
+                    .load(secureURL)
+                    .resize(128, 182)
+                    .centerCrop()
+                    .into(binding.bookImage);
+            binding.bookImage.setContentDescription(book.getVolumeInfo().getTitle());
+        } catch (Exception e) {
+            Picasso.get()
+                    .load(R.drawable.book)
+                    .resize(128, 182)
+                    .centerCrop()
+                    .into(binding.bookImage);
+        }
 
         binding.bookTitle.setText(book.getVolumeInfo().getTitle());
         if (book.getVolumeInfo().getAuthors() != null) {
             binding.bookAuthors.setText(String.join(", ", book.getVolumeInfo().getAuthors()));
-//        binding.bookAuthors.setSelected(true);
             binding.bookPublisher.setText(book.getVolumeInfo().getPublisher());
         }
 
@@ -61,14 +72,11 @@ public class BookDetail extends AppCompatActivity {
         binding.bookDescription.setText(book.getVolumeInfo().getDescription());
 
         if (book.getSaleInfo().isEbook()) {
-            binding.buyUrl.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String url = book.getSaleInfo().getBuyLink();
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(url));
-                    startActivity(intent);
-                }
+            binding.buyUrl.setOnClickListener(v -> {
+                String url = book.getSaleInfo().getBuyLink();
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
             });
         } else {
             binding.buyUrl.setClickable(false);

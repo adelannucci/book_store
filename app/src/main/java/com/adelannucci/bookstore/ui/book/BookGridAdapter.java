@@ -1,4 +1,4 @@
-package com.adelannucci.bookstore.ui;
+package com.adelannucci.bookstore.ui.book;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.adelannucci.bookstore.R;
 import com.adelannucci.bookstore.databinding.BookItemBinding;
 import com.adelannucci.bookstore.source.remote.data.Item;
+import com.adelannucci.bookstore.ui.BookDetail;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
